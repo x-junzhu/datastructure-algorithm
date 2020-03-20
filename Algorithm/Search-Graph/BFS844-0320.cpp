@@ -15,8 +15,11 @@ int g[N][N];
 /*d[i][j]表示点(i, j)到起点的距离*/
 int d[N][N];
 
-/*q[N * N]是一个保存了(i, j)坐标的队列*/
-PII q[N * N];
+/*
+q[N * N]是一个保存了(i, j)坐标的队列
+path[i][j]表示点(i, j)是由哪个点走过来的
+*/
+PII q[N * N], path[N][N];
 
 int bfs()
 {
@@ -42,9 +45,18 @@ int bfs()
 			if (x >= 0 && x < n && y >= 0 && y < m && g[x][y] == 0 && d[x][y] == -1)
 			{
 				d[x][y] = d[t.first][t.second] + 1;
+				path[x][y] = t;
 				q[++tt] = { x, y };
 			}
 		}
+	}
+	/*逆序输出迷宫走出的路径*/
+	int x = n - 1, y = m - 1;
+	while (x || y)
+	{
+		cout << x << ' ' << y << endl;
+		auto t = path[x][y];
+		x = t.first, y = t.second;
 	}
 	return d[n - 1][m - 1];
 }
