@@ -78,3 +78,21 @@ equals(): 方法
 2. 如果比较的是基本数据类型变量：比较两个变量保存的数据是否相等。（不一定类型要相同）
 + 如果比较的是引用数据类型变量：比较两个对象的地址值是否相同.即两个引用是否指向同一个对象实体
 + 补充： == 符号使用时，必须保证符号左右两边的变量类型一致。
+
+### 7 常见的异常有哪些？请举例说明
+```
+java.lang.Throwable
+  |-----java.lang.Error:一般不编写针对性的代码进行处理。
+  |-----java.lang.Exception:可以进行异常的处理
+      |------编译时异常(checked)
+  				|-----IOException
+  				|-----FileNotFoundException
+  				|-----ClassNotFoundException
+      |------运行时异常(unchecked,RuntimeException)
+  				|-----NullPointerException
+  				|-----ArrayIndexOutOfBoundsException
+  				|-----ClassCastException
+  				|-----NumberFormatException
+  				|-----InputMismatchException
+  				|-----ArithmeticException
+```
