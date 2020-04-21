@@ -136,14 +136,13 @@ StringBuilder:可变的字符序列;JDK5.0新增，线程不安全，效率高;�
 默认情况下，扩容为原来容量的2倍 + 2，同时将原数组中的元素复制到新的数组中。
 ```
 ### 12 ArrayList、LinkedList、Vector三者的异同点？
-```
-同: 三者都是实现了List接口，存储数据的特点的相同：存储有序的、可重复的数据
-不同:
- ArrayList:是List的主要实现类，线程不安全、效率高；底层使用Object[] elementData存储.
+
+同: 三者都是实现了List接口，存储数据的特点的相同：存储有序的、可重复的数据<br>
+不同:<br>
+ ArrayList:是List的主要实现类，线程不安全、效率高；底层使用Object[] elementData存储.<br>
  源码分析(jdk1.8):ArrayList list = new ArrayList()初始化时(没有添加元素之前)底层是只是新建一个空的Object[]对象数组,当开始add数据的时候,则见一个长度为10的默认Object[]对象数组,用来保存数据,当添加到超过数据长度是,开始扩容, 默认情况是扩容为当前数组长度的1.5倍,同时将原来数组中的数据复制到当前数组.
- 而(jdk1.7)在初始化时候就建立默认长度的Object[]对象数组,其他的过程和jdk1.8一样.
- LinkedList: 对于频繁的插入和删除操作，使用此类效率比ArrayList高；底层使用双向列表存储.
- 源码分析(jdk1.8):LinkedList list = new LinkedList()初始化时,在内部声明了一个内部类Node节点,维护的是一个双链表结构,每一次add操作都是将该对象封装到Node节点中.
- Vecetor:作为List接口的古老实现类；线程安全、效率低；底层使用Object[] elementData存储.
+ 而(jdk1.7)在初始化时候就建立默认长度的Object[]对象数组,其他的过程和jdk1.8一样.<br>
+ LinkedList: 对于频繁的插入和删除操作，使用此类效率比ArrayList高；底层使用双向列表存储.<br>
+ 源码分析(jdk1.8):LinkedList list = new LinkedList()初始化时,在内部声明了一个内部类Node节点,维护的是一个双链表结构,每一次add操作都是将该对象封装到Node节点中.<br>
+ Vecetor:作为List接口的古老实现类；线程安全、效率低；底层使用Object[] elementData存储.<br>
  源码分析:jdk7和jdk8中通过Vector()构造器创建对象时，底层都创建了长度为10的数组在扩容方面，默认扩容为原来的数组长度的2倍。
-```
