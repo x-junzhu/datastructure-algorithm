@@ -146,3 +146,31 @@ StringBuilder:可变的字符序列;JDK5.0新增，线程不安全，效率高;�
  源码分析(jdk1.8):LinkedList list = new LinkedList()初始化时,在内部声明了一个内部类Node节点,维护的是一个双链表结构,每一次add操作都是将该对象封装到Node节点中.<br>
  Vecetor:作为List接口的古老实现类；线程安全、效率低；底层使用Object[] elementData存储.<br>
  源码分析:jdk7和jdk8中通过Vector()构造器创建对象时，底层都创建了长度为10的数组在扩容方面，默认扩容为原来的数组长度的2倍。
+### 13 HashMap的底层实现原理？
+```
+从JDK 1.7开始说起:
+HashMap map = new HashMap()开始在底层创建一个长度为16的Entry[] 数组.在此之前已经put(key, value)多次,知道本次map.put(key1, value1),首先通过可以所在类的hashCode()计算器哈希值，即该条数据在Entry[]数组中位置：
+  如果该哈希值对应Entry[]数组的位置为空，则插入成功 --> 情况1
+  如果该哈希值对应Entry[]数组的位置不为空(可能存在一条数据或者一个链表),开始对比(key1, value1)的哈希值与该位置上所有元素的哈希值:
+      如果(key1, value1)与该位置上所有元素的哈希值均不相同，则插入成功 --> 情况2
+      如果(key1, value1)与该位置上的某条数据(key2, value2)的哈希值相等，则开始比较key1.value.equals(key2.value):
+          如果equals返回false，则添加成功 --> 情况3
+          如果equals返回true,则用value2替换value1
+说明: 情况2和情况3(key1, value1)都是采用链表方式存储.
+补充JDK 1.8:
+1.new HashMap()的时候不会一开始就创建一个长度为16的数组，只有在第一次put()操作后，才创建数组。
+2.JDK 1.8底层使用的数组是Node[],而非Entry[]
+3.JDK 1.7底层使用的是数组+链表, JDK 1.8使用的是数组+链表+红黑树
+4.JDK 1.7的链表采用的是头插法，JDK 1.8的链表采用的是尾插法。
+5.JDK 1.8中当链表长度大于8，并且Node[]数组长度大于64时，链表转换成红黑树。
+在不断添加的过程中会涉及到扩容问题，当数组中位置使用超过临界值且下一个存储的位置不空的时候，将数组长度扩容为原来的两倍，并且把原数组复制到新的数组中。
+HashMap底层典型属性的属性的说明：
+DEFAULT_INITIAL_CAPACITY : HashMap的默认容量，16
+DEFAULT_LOAD_FACTOR：HashMap的默认加载因子：0.75
+threshold：扩容的临界值，=容量*填充因子：16 * 0.75 => 12
+TREEIFY_THRESHOLD：Bucket中链表长度大于该默认值，转化为红黑树:8
+MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
+```
+### 14 HashMap和 Hashtable的异同点？
+
+### 15 CurrentHashMap 与 Hashtable的异同？
