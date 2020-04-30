@@ -29,6 +29,7 @@ public class Cattleya889 {
 
     }
 
+
     public long qmi(long a, int k, int p)
     {
         long res = 1L;
