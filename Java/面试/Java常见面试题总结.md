@@ -219,6 +219,13 @@ MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
 的属性进行拆分将一条一条的数据存入数据库中中对应的字段，在这些过程中我们操作的基础都是一个
 个对象。
 
-### 14 HashMap和 Hashtable的异同点？
+### 15 抽象类和接口的异同点？
+相同点：不能实例化；都可以包含抽象方法的。
+不同点：
+1) 把抽象类和接口(java7,java8,java9)的定义、内部结构解释说明
+2) 类：单继承性    接口：多继承
+   类与接口：多实现
 
-### 15 CurrentHashMap 与 Hashtable的异同？
+###  HashMap和 Hashtable的异同点？
+
+###  CurrentHashMap 与 Hashtable的异同？
