@@ -6,6 +6,7 @@ package edu.fzu.tree;
  */
 public class BinaryTreeDemo {
 
+    //二叉树的前中后遍历-递归
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
         //创建节点
