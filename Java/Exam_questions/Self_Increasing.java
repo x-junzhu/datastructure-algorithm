@@ -6,6 +6,7 @@ package edu.fzu.search;
  */
 public class Self_Increasing {
 
+    //1.自增
     public static void main(String[] args){
         int i = 1;
         i = i++;
