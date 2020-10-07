@@ -16,14 +16,14 @@
 String(JDK1.0)不可变的字符序列; 底层使用char[]存储<br>
 StringBuffer(JDK1.0)可变的字符序列;线程安全的, 效率低; 底层使用char[]存储<br>
 StringBuilder(JDK1.5)可变的字符序列；jdk5.0新增的，线程不安全的，效率高；底层使用char[]存储<br>
-<font color=#1E90FF>String:字符串, 使用一对""引起来表示<br></font>
+***String:字符串, 使用一对""引起来表示***<br>
 1.String声明为final的，不可被继承<br>
 2.String实现了Serializable接口：表示字符串是支持序列化的。实现了Comparable接口：表示String可以比较大小<br>
 3.String内部定义了final char[] value用于存储字符串数据<br>
 4.通过字面量的方式（区别于new给一个字符串赋值，此时的字符串值声明在字符串常量池中)<br>
 5.字符串常量池中是不会存储相同内容(使用String类的equals()比较，返回true)的字符串的<br>
 
-<font color=#DC143C>不可变性的说明</font><br>
+***不可变性的说明***<br>
 1.当对字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value进行赋值。<br>
 2.当对现的字符串进行连接操作时，也需要重新指定内存区域赋值，不能使用原有的value进行赋值。<br>
 3.当调用String的replace()方法修改指定字符或字符串时，也需要重新指定内存区域赋值，不能使用原有的value进行赋值。<br>
