@@ -1,6 +1,6 @@
 # Java面试题按类别总结(2020.10.07)
 ## 1、Java基础
-1.1 equals和==区别(null哪个能用), 如果没有重写equals方法,那么a==b和a.equals(b)一样吗(2020字节提前批)
+> 1.1 equals和==区别(null哪个能用), 如果没有重写equals方法,那么a==b和a.equals(b)一样吗(2020字节提前批)
 
 equals(): 方法
 1. 是一个方法，而非运算符
@@ -24,11 +24,52 @@ equals(): 方法
 
 1.2 hashcode和equals(2020字节提前批)<br>
 
-1.3 创建线程的方法及区别(2020字节提前批)<br>
+> 1.3 创建线程的方法及区别(2020字节提前批)
 
-1.4 try catch能捕获到哪些异常(2020字节提前批)<br>
+方式一：继承Thread类的方式
 
-1.5 重载和重写的区别(2020招银网络提前批)<br>
+方式二：实现Runnable接口的方式
+
+方式三：实现Callable接口。 --- JDK 5.0新增
+
+如何理解实现Callable接口的方式创建多线程比实现Runnable接口创建多线程方式强大？
+1. call()可以返回值的。
+2. call()可以抛出异常，被外面的操作捕获，获取异常的信息
+3. Callable是支持泛型的
+
+方式四：使用线程池
+
+好处：
+1.提高响应速度（减少了创建新线程的时间）
+2.降低资源消耗（重复利用线程池中线程，不需要每次都创建）
+3.便于线程管理
+      corePoolSize：核心池的大小
+      maximumPoolSize：最大线程数
+      keepAliveTime：线程没任务时最多保持多长时间后会终止
+
+> 1.4 try catch能捕获到哪些异常(2020字节提前批)
+
+异常分类(广义的异常包括错误)
+```
+java.lang.Throwable
+  |-----java.lang.Error:一般不编写针对性的代码进行处理。
+  |-----java.lang.Exception:可以进行异常的处理
+      |------编译时异常(checked)
+        |-----IOException
+        |-----FileNotFoundException
+        |-----ClassNotFoundException
+      |------运行时异常(unchecked,RuntimeException)
+        |-----NullPointerException
+        |-----ArrayIndexOutOfBoundsException
+        |-----ClassCastException
+        |-----NumberFormatException
+        |-----InputMismatchException
+        |-----ArithmeticException
+```
+try catch能捕获到java.lang.Exception
+
+> 1.5 重载和重写的区别(2020招银网络提前批)
+
 ① 概念
 
 重载:同一个类中,相同的方法名;不同的参数列表,包括不同的参数类型和不同的参数个数
@@ -45,7 +86,8 @@ equals(): 方法
 所以：对于重载而言，在方法调用之前，编译器就已经确定了所要调用的方法，这称为“早绑定”或“静态绑定”；
 而对于多态，只等到方法调用的那一刻，解释运行器才会确定所要调用的具体方法，这称为“晚绑定”或“动态绑定”。
 
-1.6 static和final会被重写吗(2020招银网络提前批)<br>
+> 1.6 static和final会被重写吗(2020招银网络提前批)
+
 ***final***
 1. final 用来修饰一个类:此类不能被其他类所继承。比如：String类、System类、StringBuffer类<br>
 2. final 用来修饰方法：表明此方法不可以被重写比如：Object类中getClass()<br>
@@ -108,7 +150,21 @@ StringBuilder(JDK1.5)可变的字符序列；jdk5.0新增的，线程不安全�
 
 1.10 说说你理解的反射，应用在哪(可以往Spring框架上说)(2020招银网络提前批)<br>
 
-1.11 arraylist，linkedlist，hashset区别和使用场景，线程安全(2020京东提前批)<br>
+> 1.11 arraylist，linkedlist，hashset区别和使用场景，线程安全(2020京东提前批)
+
+ArrayList、LinkedList、Vector三者的异同点(后面再补充一下HashSet)
+
+同: 三者都是实现了List接口，存储数据的特点的相同：存储有序的、可重复的数据<br>
+不同:<br>
+ ArrayList:是List的主要实现类，线程不安全、效率高；底层使用Object[] elementData存储.<br>
+ 源码分析(jdk1.8):ArrayList list = new ArrayList()初始化时(没有添加元素之前)底层是只是新建一个空的Object[]对象数组,当开始add数据的时候,则见一个长度为10的默认Object[]对象数组,用来保存数据,当添加到超过数据长度是,开始扩容, 默认情况是扩容为当前数组长度的1.5倍,同时将原来数组中的数据复制到当前数组.
+ 而(jdk1.7)在初始化时候就建立默认长度的Object[]对象数组,其他的过程和jdk1.8一样.
+
+ LinkedList: 对于频繁的插入和删除操作，使用此类效率比ArrayList高；底层使用双向列表存储.<br>
+ 源码分析(jdk1.8):LinkedList list = new LinkedList()初始化时,在内部声明了一个内部类Node节点,维护的是一个双链表结构,每一次add操作都是将该对象封装到Node节点中.
+
+ Vecetor:作为List接口的古老实现类；线程安全、效率低；底层使用Object[] elementData存储.<br>
+ 源码分析:jdk7和jdk8中通过Vector()构造器创建对象时，底层都创建了长度为10的数组在扩容方面，默认扩容为原来的数组长度的2倍。
 
 1.12 new子类的时候，子类和父类静态代码块，构造器的执行顺序(2020京东提前批)<br>
 
@@ -118,7 +174,36 @@ StringBuilder(JDK1.5)可变的字符序列；jdk5.0新增的，线程不安全�
 
 1.15 内存泄露的场景(2020招行总行提前批)<br>
 
-1.16 说一下hashmap实现, 线程安全的hashmap(2020新浪微博提前批)<br>
+> 1.16 说一下hashmap实现, 线程安全的hashmap(2020新浪微博提前批)<br>
+
+```
+从JDK 1.7开始说起:
+HashMap map = new HashMap()开始在底层创建一个长度为16的Entry[] 数组.在此之前已经
+put(key, value)多次,知道本次map.put(key1, value1),首先通过可以所在类的hashCode()计算器哈希值，
+即该条数据在Entry[]数组中位置：
+  如果该哈希值对应Entry[]数组的位置为空，则插入成功 --> 情况1
+  如果该哈希值对应Entry[]数组的位置不为空(可能存在一条数据或者一个链表),开始对比
+  (key1, value1)的哈希值与该位置上所有元素的哈希值:
+      如果(key1, value1)与该位置上所有元素的哈希值均不相同，则插入成功 --> 情况2
+      如果(key1, value1)与该位置上的某条数据(key2, value2)的哈希值相等，则开始比较key1.value.equals(key2.value):
+          如果equals返回false，则添加成功 --> 情况3
+          如果equals返回true,则用value2替换value1
+说明: 情况2和情况3(key1, value1)都是采用链表方式存储.
+补充JDK 1.8:
+1.new HashMap()的时候不会一开始就创建一个长度为16的数组，只有在第一次put()操作后，才创建数组。
+2.JDK 1.8底层使用的数组是Node[],而非Entry[]
+3.JDK 1.7底层使用的是数组+链表, JDK 1.8使用的是数组+链表+红黑树
+4.JDK 1.7的链表采用的是头插法，JDK 1.8的链表采用的是尾插法。
+5.JDK 1.8中当链表长度大于8，并且Node[]数组长度大于64时，链表转换成红黑树。
+在不断添加的过程中会涉及到扩容问题，当数组中位置使用超过临界值且下一个存储的位置不空的时候，
+将数组长度扩容为原来的两倍，并且把原数组复制到新的数组中。
+HashMap底层典型属性的属性的说明：
+DEFAULT_INITIAL_CAPACITY : HashMap的默认容量，16
+DEFAULT_LOAD_FACTOR：HashMap的默认加载因子：0.75
+threshold：扩容的临界值，=容量*填充因子：16 * 0.75 => 12
+TREEIFY_THRESHOLD：Bucket中链表长度大于该默认值，转化为红黑树:8
+MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
+```
 
 
 ## 2、JVM
@@ -152,7 +237,7 @@ StringBuilder(JDK1.5)可变的字符序列；jdk5.0新增的，线程不安全�
 ***初始化阶段***
 
 1. 初始化阶段就是执行类构造器方法\<clinit>()的过程
-2. 此方法不需定义，是javac编译器自动收集类中的所有类变量的赋值动作和静态代码块中的语句合并而来。也就是说，当我们代码中包含static变量的时候，就会有\<clinit>()方法
+2. 此方法不需定义，是javac编译器自动收集类中的所有类变量的赋值动作和静态代码块中的语句合并而来。也就是说，当我们代码中包含**static变量或者静态代码块**的时候，就会有\<clinit>()方法
 3. \<clinit>()方法中的指令按语句在源文件中出现的顺序执行
 4. \<clinit>()不同于类的构造器(关联：构造器是虚拟机视角下的\<init>())
 5. 若该类具有父类，JVM会保证子类的\<clinit>()执行前，父类的\<clinit>()已经执行完毕
