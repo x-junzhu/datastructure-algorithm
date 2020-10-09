@@ -243,6 +243,50 @@ MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
 4. \<clinit>()不同于类的构造器(关联：构造器是虚拟机视角下的\<init>())
 5. 若该类具有父类，JVM会保证子类的\<clinit>()执行前，父类的\<clinit>()已经执行完毕
 6. 虚拟机必须保证一个类的\<clinit>()方法在多线程下被同步加锁,即：一个类只会被类的加载器加载一次
+
+***双亲委派机制***
+
+Java虚拟机对class文件采用的是按需加载的方式, 也就是说当需要使用该类时才会将它的class文件加载到内存生成class对象。而且加载某个类的class文件时，Java虚拟机采用的是双亲委派模式，即把请求交由父类处理，它是一种任务委派模式。
+
+类加载器分类
+1. 启动类加载器（引导类加载器，Bootstrap ClassLoader）
+* 这个类加载使用C/C++语言实现的，嵌套在JVM内部。
+* 它用来加载Java的核心库（JAVAHOME/jre/1ib/rt.jar、resources.jar或sun.boot.class.path路径下的内容），用于提供JVM自身需要的类。
+* 并不继承自ava.lang.ClassLoader，没有父加载器。
+* 加载扩展类和应用程序类加载器，并指定为他们的父类加载器。
+* 出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类
+
+2. 扩展类加载器（Extension ClassLoader）
+* Java语言编写，由sun.misc.Launcher$ExtClassLoader实现。
+* 派生于ClassLoader类
+* 父类加载器为启动类加载器
+* 从java.ext.dirs系统属性所指定的目录中加载类库，或从JDK的安装目录的jre/1ib/ext子目录（扩展目录）下加载类库。如果用户创建的JAR放在此目录下，也会自动由扩展类加载器加载。
+
+3. 应用程序类加载器（系统类加载器，AppClassLoader）
+* java语言编写，由sun.misc.LaunchersAppClassLoader实现
+* 派生于ClassLoader类
+* 父类加载器为启动类加载器
+* 它负责加载环境变量classpath或系统属性java.class.path指定路径下的类库
+* 该类加载是程序中默认的类加载器，一般来说，Java应用的类都是由它来完成加载
+* 通过classLoader#getSystemclassLoader()方法可以获取到该类加载器
+
+![avatar](image/classloader_classifer.png)
+
+
+
+工作原理:
+
+* 如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行;
+* 如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器;
+* 如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式。
+![avatar](image/loader.png)
+
+**优点**
+1. 避免类的重复加载
+2. 保护程序安全，防止核心API被随意篡改
+* 自定义类：java.lang.String
+* 自定义类：java.lang.ShkStart（报错：阻止创建 java.lang开头的类）
+
 > 2.2 新生代和老年代都用什么算法(2020字节提前批)<br>
 
 > 2.3 jvm内存模型;堆的划分,垃圾回收算法(2020字节提前批)<br>
