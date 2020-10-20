@@ -131,6 +131,7 @@ static修饰方法：静态方法、类方法<br>
 String(JDK1.0)不可变的字符序列; 底层使用final char[]存储<br>
 StringBuffer(JDK1.0)可变的字符序列;线程安全的, 效率低; 底层使用transient char[]存储<br>
 StringBuilder(JDK1.5)可变的字符序列；jdk5.0新增的，线程不安全的，效率高；底层使用char[]存储<br>
+
 ***String:字符串, 使用一对""引起来表示***<br>
 1.String声明为final的，不可被继承<br>
 2.String实现了Serializable接口：表示字符串是支持序列化的。实现了Comparable接口：表示String可以比较大小<br>
@@ -256,8 +257,14 @@ MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
 
 > 1.19 调用start和run的区别? sleep和wait区别(2020美团点评)
 
+> 1.20 测试typora如何使用?
+
+测试1:
+
+测试2:
+
 ## 2、JVM
-> 2.1 类加载过程和双亲委派机制(2020字节提前批)<br>
+> 2.1 类加载过程和双亲委派机制(2020字节提前批)
 
 类加载过程: 加载(loading)=>链接(验证->准备->解析)=>初始化
 
