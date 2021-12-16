@@ -229,7 +229,7 @@ ArrayList、LinkedList、Vector三者的异同点(后面再补充一下HashSet)
 ```
 从JDK 1.7开始说起:
 HashMap map = new HashMap()开始在底层创建一个长度为16的Entry[] 数组.在此之前已经
-put(key, value)多次,知道本次map.put(key1, value1),首先通过可以所在类的hashCode()计算器哈希值，
+put(key, value)多次,直到本次map.put(key1, value1),首先通过所在类的hashCode()计算哈希值，
 即该条数据在Entry[]数组中位置：
   如果该哈希值对应Entry[]数组的位置为空，则插入成功 --> 情况1
   如果该哈希值对应Entry[]数组的位置不为空(可能存在一条数据或者一个链表),开始对比
