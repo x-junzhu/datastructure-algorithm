@@ -310,7 +310,7 @@ MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
 
 Java虚拟机对class文件采用的是按需加载的方式, 也就是说当需要使用该类时才会将它的class文件加载到内存生成class对象。而且加载某个类的class文件时，Java虚拟机采用的是双亲委派模式，即把请求交由父类处理，它是一种任务委派模式。
 
-类加载器分类
+类加载器分类(启动类加载器和自定义加载器[扩展类加载器和应用程序加载器])
 1. 启动类加载器（引导类加载器，Bootstrap ClassLoader）
 * 这个类加载使用C/C++语言实现的，嵌套在JVM内部。
 * 它用来加载Java的核心库（JAVAHOME/jre/1ib/rt.jar、resources.jar或sun.boot.class.path路径下的内容），用于提供JVM自身需要的类。
